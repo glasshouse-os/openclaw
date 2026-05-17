@@ -1,0 +1,57 @@
+name: Compliance Stage B — Regex Leak Filter
+
+# Stage B is a load-bearing safety mechanism in the Glasshouse OS compliance
+# pipeline. Every PR that touches the filter (or that could affect it) must
+# leave the test suite green. See compliance/stage-b/README.md for context.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "compliance/stage-b/**"
+      - ".github/workflows/compliance-stage-b.yml"
+  pull_request:
+    paths:
+      - "compliance/stage-b/**"
+      - ".github/workflows/compliance-stage-b.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: compliance-stage-b-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Stage B tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: compliance/stage-b
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: compliance/stage-b/package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: compliance/stage-b/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-workspace
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Run vitest
+        run: pnpm test

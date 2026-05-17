@@ -20,7 +20,7 @@ never ambiguous when a change is made.
 
 ## The Q4 lock (17 May 2026 decision)
 
-> *"Contribute universal pieces upstream, keep proprietary in the GHG fork."*
+> _"Contribute universal pieces upstream, keep proprietary in the GHG fork."_
 
 Translation: anything that any agent-runtime user would benefit from goes upstream
 as PRs to `openclaw/openclaw`. Anything that encodes Glasshouse-specific verticals,
@@ -37,78 +37,78 @@ it's proprietary. Otherwise it's a candidate for upstream.**
 
 ### Layer 1 — Model Routing
 
-| Component | Upstream / Proprietary | Why |
-|---|---|---|
-| `routing.yaml` schema + parser | **Upstream** | Generic routing config any agent runtime can use |
-| Default-model routing rules (text, code-agent-loop, long-context, web, image, video, voice) | **Upstream** | Universal model defaults; not Glasshouse-specific |
-| Cost-cliff warnings (e.g. GPT-5.5 272K, Gemini 200K) | **Upstream** | Public model facts |
-| `degraded_mode` config primitive | **Upstream** | Universal pattern (vendor outage handling) |
-| Sonnet/Haiku quarantine guardrails | **Upstream** | Generic gating primitive — any user can configure their own quarantine |
-| Multi-agent research pipeline pattern (Opus lead + Sonar/Gemini fanout) | **Upstream** | Pattern, not implementation specific to us |
-| Provenance annotation column on routing.yaml | **Upstream** | Generic feature |
-| **TGA/AHPRA/ASIC-specific routing rules** | **Proprietary** | Glasshouse vertical |
-| **Per-client cost ceilings** | **Proprietary** | Glasshouse client identifiers |
-| **Brand-voice fine-tune routing** | **Proprietary** | Glasshouse client data |
+| Component                                                                                   | Upstream / Proprietary | Why                                                                    |
+| ------------------------------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------------------- |
+| `routing.yaml` schema + parser                                                              | **Upstream**           | Generic routing config any agent runtime can use                       |
+| Default-model routing rules (text, code-agent-loop, long-context, web, image, video, voice) | **Upstream**           | Universal model defaults; not Glasshouse-specific                      |
+| Cost-cliff warnings (e.g. GPT-5.5 272K, Gemini 200K)                                        | **Upstream**           | Public model facts                                                     |
+| `degraded_mode` config primitive                                                            | **Upstream**           | Universal pattern (vendor outage handling)                             |
+| Sonnet/Haiku quarantine guardrails                                                          | **Upstream**           | Generic gating primitive — any user can configure their own quarantine |
+| Multi-agent research pipeline pattern (Opus lead + Sonar/Gemini fanout)                     | **Upstream**           | Pattern, not implementation specific to us                             |
+| Provenance annotation column on routing.yaml                                                | **Upstream**           | Generic feature                                                        |
+| **TGA/AHPRA/ASIC-specific routing rules**                                                   | **Proprietary**        | Glasshouse vertical                                                    |
+| **Per-client cost ceilings**                                                                | **Proprietary**        | Glasshouse client identifiers                                          |
+| **Brand-voice fine-tune routing**                                                           | **Proprietary**        | Glasshouse client data                                                 |
 
 ### Layer 2 — Memory
 
-| Component | Upstream / Proprietary | Why |
-|---|---|---|
-| `MemoryBackend` abstraction interface | **Upstream** | Generic vendor-neutral primitive (Anthropic, Mem0, Letta, custom) |
-| Anthropic Memory Tool reference implementation | **Upstream** | Standard reference impl |
-| YAML frontmatter schema for memory files | **Upstream** | Generic indexable format |
-| SQLite FTS5 + Voyage hybrid retriever | **Upstream** | Generic retrieval pattern |
-| fswatch indexer + frontmatter parser | **Upstream** | Generic tooling |
-| Graphiti temporal knowledge graph integration | **Upstream** | Generic integration |
-| Backup + restore tooling | **Upstream** | Generic |
-| **Glasshouse client memory namespaces** | **Proprietary** | Client data |
-| **TGA / AHPRA / ASIC case-law corpora** | **Proprietary** | Glasshouse vertical IP |
-| **Brand-voice corpora per client** | **Proprietary** | Client data |
+| Component                                      | Upstream / Proprietary | Why                                                               |
+| ---------------------------------------------- | ---------------------- | ----------------------------------------------------------------- |
+| `MemoryBackend` abstraction interface          | **Upstream**           | Generic vendor-neutral primitive (Anthropic, Mem0, Letta, custom) |
+| Anthropic Memory Tool reference implementation | **Upstream**           | Standard reference impl                                           |
+| YAML frontmatter schema for memory files       | **Upstream**           | Generic indexable format                                          |
+| SQLite FTS5 + Voyage hybrid retriever          | **Upstream**           | Generic retrieval pattern                                         |
+| fswatch indexer + frontmatter parser           | **Upstream**           | Generic tooling                                                   |
+| Graphiti temporal knowledge graph integration  | **Upstream**           | Generic integration                                               |
+| Backup + restore tooling                       | **Upstream**           | Generic                                                           |
+| **Glasshouse client memory namespaces**        | **Proprietary**        | Client data                                                       |
+| **TGA / AHPRA / ASIC case-law corpora**        | **Proprietary**        | Glasshouse vertical IP                                            |
+| **Brand-voice corpora per client**             | **Proprietary**        | Client data                                                       |
 
 ### Layer 3 — Orchestration + Compliance
 
-| Component | Upstream / Proprietary | Why |
-|---|---|---|
-| Pre-send pipeline architecture (stages B–G) | **Upstream** | Generic safety pattern |
-| Stage B — regex leak filter framework | **Upstream** | Generic leak detection — any agent should have it |
-| Stage B default rules (internal monologue, tool refs, <thinking> tags) | **Upstream** | Universal failure modes |
-| Stage C policy validator framework | **Upstream** | Generic |
-| Stage D adapter (OpenAI Moderation, Lakera, Patronus pluggable) | **Upstream** | Generic |
-| Stage E — clean-context reviewer subagent pattern | **Upstream** | Generic safety pattern (Cognition-style) |
-| Stage F — hallucination check adapter (Patronus / Vectara) | **Upstream** | Generic |
-| Stage G — trust-ladder + human-gate framework | **Upstream** | Generic |
-| Immutable audit log schema | **Upstream** | Generic |
-| Durable execution adapter (LangGraph / Inngest / Temporal pluggable) | **Upstream** | Generic |
-| **TGA Schedule 4/8 regex blocklist** | **Proprietary** | Glasshouse vertical IP |
-| **AU prohibited-representations regex blocklist** | **Proprietary** | Glasshouse vertical IP |
-| **TGA case-law summary corpus** | **Proprietary** | Glasshouse vertical IP, hand-curated |
-| **AHPRA s.133 testimonial rules** | **Proprietary** | Glasshouse vertical IP |
-| **ASIC financial-promo rules** | **Proprietary** | Glasshouse vertical IP |
-| **Client-specific scope allow-lists** | **Proprietary** | Client identifiers |
-| **Glasshouse trust-ladder thresholds** | **Proprietary** | Operating model |
+| Component                                                              | Upstream / Proprietary | Why                                               |
+| ---------------------------------------------------------------------- | ---------------------- | ------------------------------------------------- |
+| Pre-send pipeline architecture (stages B–G)                            | **Upstream**           | Generic safety pattern                            |
+| Stage B — regex leak filter framework                                  | **Upstream**           | Generic leak detection — any agent should have it |
+| Stage B default rules (internal monologue, tool refs, <thinking> tags) | **Upstream**           | Universal failure modes                           |
+| Stage C policy validator framework                                     | **Upstream**           | Generic                                           |
+| Stage D adapter (OpenAI Moderation, Lakera, Patronus pluggable)        | **Upstream**           | Generic                                           |
+| Stage E — clean-context reviewer subagent pattern                      | **Upstream**           | Generic safety pattern (Cognition-style)          |
+| Stage F — hallucination check adapter (Patronus / Vectara)             | **Upstream**           | Generic                                           |
+| Stage G — trust-ladder + human-gate framework                          | **Upstream**           | Generic                                           |
+| Immutable audit log schema                                             | **Upstream**           | Generic                                           |
+| Durable execution adapter (LangGraph / Inngest / Temporal pluggable)   | **Upstream**           | Generic                                           |
+| **TGA Schedule 4/8 regex blocklist**                                   | **Proprietary**        | Glasshouse vertical IP                            |
+| **AU prohibited-representations regex blocklist**                      | **Proprietary**        | Glasshouse vertical IP                            |
+| **TGA case-law summary corpus**                                        | **Proprietary**        | Glasshouse vertical IP, hand-curated              |
+| **AHPRA s.133 testimonial rules**                                      | **Proprietary**        | Glasshouse vertical IP                            |
+| **ASIC financial-promo rules**                                         | **Proprietary**        | Glasshouse vertical IP                            |
+| **Client-specific scope allow-lists**                                  | **Proprietary**        | Client identifiers                                |
+| **Glasshouse trust-ladder thresholds**                                 | **Proprietary**        | Operating model                                   |
 
 ### Layer 4 — Observability
 
-| Component | Upstream / Proprietary | Why |
-|---|---|---|
-| OpenTelemetry + OpenInference instrumentation | **Upstream** | Standard, industry-aligned |
-| Resource attribute schema (`agent.name`, `client.id`, `project.id`, `task.type`, `session.id`, etc.) | **Upstream** | Generic semantic conventions |
-| Langfuse integration patterns | **Upstream** | Standard |
-| Alert threshold framework (per-turn, per-session, per-agent, fleet) | **Upstream** | Generic |
-| KPI definitions (first-pass acceptance, rework rate, cost-per-task, drift catches) | **Upstream** | Generic |
-| Cache-ratio monitoring | **Upstream** | Generic |
-| **Per-client cost dashboards** | **Proprietary** | Client identifiers |
-| **Glasshouse internal command centre (Growth / Ops / BD / Quality / CSAT / Exit)** | **Proprietary** | Operating model |
+| Component                                                                                            | Upstream / Proprietary | Why                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------- | ---------------------------- |
+| OpenTelemetry + OpenInference instrumentation                                                        | **Upstream**           | Standard, industry-aligned   |
+| Resource attribute schema (`agent.name`, `client.id`, `project.id`, `task.type`, `session.id`, etc.) | **Upstream**           | Generic semantic conventions |
+| Langfuse integration patterns                                                                        | **Upstream**           | Standard                     |
+| Alert threshold framework (per-turn, per-session, per-agent, fleet)                                  | **Upstream**           | Generic                      |
+| KPI definitions (first-pass acceptance, rework rate, cost-per-task, drift catches)                   | **Upstream**           | Generic                      |
+| Cache-ratio monitoring                                                                               | **Upstream**           | Generic                      |
+| **Per-client cost dashboards**                                                                       | **Proprietary**        | Client identifiers           |
+| **Glasshouse internal command centre (Growth / Ops / BD / Quality / CSAT / Exit)**                   | **Proprietary**        | Operating model              |
 
 ### Layer 5 — Improvement Loop
 
-| Component | Upstream / Proprietary | Why |
-|---|---|---|
-| Labelled-dataset infrastructure | **Upstream** | Generic |
-| DSPy / TextGrad compile patterns | **Upstream** | Generic patterns |
-| Quality-scoring framework | **Upstream** | Generic |
-| **Brand-voice fine-tunes per client** | **Proprietary** | Client data |
-| **Labelled dataset of Glasshouse deliverables** | **Proprietary** | Glasshouse IP |
+| Component                                       | Upstream / Proprietary | Why              |
+| ----------------------------------------------- | ---------------------- | ---------------- |
+| Labelled-dataset infrastructure                 | **Upstream**           | Generic          |
+| DSPy / TextGrad compile patterns                | **Upstream**           | Generic patterns |
+| Quality-scoring framework                       | **Upstream**           | Generic          |
+| **Brand-voice fine-tunes per client**           | **Proprietary**        | Client data      |
+| **Labelled dataset of Glasshouse deliverables** | **Proprietary**        | Glasshouse IP    |
 
 ### Layer 6 — Operating Model
 
@@ -118,20 +118,20 @@ template provisioning specific to Glasshouse defaults, reporting framework, and 
 internal command centre.
 
 Some sub-pieces may have generic patterns worth extracting (e.g. "universal agent
-provisioning script framework" is generic; the *Glasshouse default scaffolds* are
+provisioning script framework" is generic; the _Glasshouse default scaffolds_ are
 proprietary), but as a whole, Layer 6 stays in this fork.
 
-| Component | Upstream / Proprietary | Why |
-|---|---|---|
-| Universal agent provisioning script — framework | **Upstream** | Generic provisioning pattern |
-| Universal agent provisioning script — Glasshouse defaults (SOUL/AGENTS/USER scaffolds, compliance wiring) | **Proprietary** | Glasshouse identity |
-| Client onboarding webhook + intake-form schema | **Proprietary** | Operating model |
-| Channel-expert playbooks (SEO, Meta, Google Ads, Content, Web/Dev, Email, Organic Social) | **Proprietary** | Glasshouse IP |
-| Standard client journey orchestration | **Proprietary** | Operating model |
-| AI note-taker → action-item → ClickUp pipeline | **Upstream** (generic plumbing) + **Proprietary** (Glasshouse routing rules) | Split |
-| Standard monthly report template | **Proprietary** | Glasshouse brand |
-| Data connectors (GSC, GA4, Meta, Google Ads, ClickUp → unified) | **Upstream** | Generic |
-| Reporting auto-population engine | **Upstream** | Generic |
+| Component                                                                                                 | Upstream / Proprietary                                                       | Why                          |
+| --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------- |
+| Universal agent provisioning script — framework                                                           | **Upstream**                                                                 | Generic provisioning pattern |
+| Universal agent provisioning script — Glasshouse defaults (SOUL/AGENTS/USER scaffolds, compliance wiring) | **Proprietary**                                                              | Glasshouse identity          |
+| Client onboarding webhook + intake-form schema                                                            | **Proprietary**                                                              | Operating model              |
+| Channel-expert playbooks (SEO, Meta, Google Ads, Content, Web/Dev, Email, Organic Social)                 | **Proprietary**                                                              | Glasshouse IP                |
+| Standard client journey orchestration                                                                     | **Proprietary**                                                              | Operating model              |
+| AI note-taker → action-item → ClickUp pipeline                                                            | **Upstream** (generic plumbing) + **Proprietary** (Glasshouse routing rules) | Split                        |
+| Standard monthly report template                                                                          | **Proprietary**                                                              | Glasshouse brand             |
+| Data connectors (GSC, GA4, Meta, Google Ads, ClickUp → unified)                                           | **Upstream**                                                                 | Generic                      |
+| Reporting auto-population engine                                                                          | **Upstream**                                                                 | Generic                      |
 
 ---
 
@@ -176,6 +176,13 @@ git commit
 git push origin ghg-<feature>
 # (No upstream PR — stays in fork)
 
+# Make a Linear-tracked Glasshouse change
+git checkout -b feature/gla-<NN>-<slug>
+# ... edit ...
+git commit
+git push origin feature/gla-<NN>-<slug>
+# (No upstream PR — stays in fork. Branch maps 1:1 to a Linear ticket.)
+
 # Make an upstream-candidate change
 git checkout -b upstream-<feature>
 # ... edit ...
@@ -189,11 +196,12 @@ git push origin upstream-<feature>
 
 ## Branch naming convention
 
-| Prefix | Meaning |
-|---|---|
-| `upstream-*` | Change targeted at upstream PR. Should pass the 3-question test cleanly. |
-| `ghg-*` | Glasshouse-proprietary change. Stays in fork. |
-| `feat-*` | Work-in-progress, not yet categorised. Decide before merge. |
+| Prefix               | Meaning                                                                             |
+| -------------------- | ----------------------------------------------------------------------------------- |
+| `upstream-*`         | Change targeted at upstream PR. Should pass the 3-question test cleanly.            |
+| `ghg-*`              | Glasshouse-proprietary change. Stays in fork. No Linear ticket required.            |
+| `feature/gla-<NN>-*` | Linear-tracked Glasshouse-proprietary change. One branch per ticket. Stays in fork. |
+| `feat-*`             | Work-in-progress, not yet categorised. Decide before merge.                         |
 
 ---
 
