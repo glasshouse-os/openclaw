@@ -1,0 +1,25 @@
+{
+  "name": "@glasshouse/compliance-stage-c",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.1.0+sha512.0c44e842e5686b2c061a81adda8b2258bd8818e9704b2cf2c63d56b931a7b2e910092e085027003b96ca3911ab56a07f6df5abaed2be9925034cdd686a535b14",
+  "description": "Stage C.1/C.2: regex hardblock policy validators (TGA Schedule 4/8 + prohibited representations) for the Glasshouse OS compliance pipeline. Pure regex, no LLM calls.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./patterns": "./src/patterns.ts",
+    "./engine": "./src/engine.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^4.1.6"
+  }
+}

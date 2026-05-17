@@ -1,0 +1,58 @@
+name: Compliance Stage C — Regex Policy Validators
+
+# Stage C.1/C.2 are the regulated-content hardblock in the Glasshouse OS
+# compliance pipeline. Every PR that touches the validators (or that
+# could affect them) must leave the test suite green. See
+# compliance/stage-c/README.md for context.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "compliance/stage-c/**"
+      - ".github/workflows/compliance-stage-c.yml"
+  pull_request:
+    paths:
+      - "compliance/stage-c/**"
+      - ".github/workflows/compliance-stage-c.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: compliance-stage-c-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Stage C tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: compliance/stage-c
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: compliance/stage-c/package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: compliance/stage-c/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-workspace
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Run vitest
+        run: pnpm test
