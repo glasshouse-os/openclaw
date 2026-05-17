@@ -1,0 +1,30 @@
+{
+  "_comment": "Glasshouse client registry used by Stage B for cross-client leak detection. PROPRIETARY — do NOT contribute upstream. When a client name is added/removed, update test/cross-client.test.ts coverage. caseSensitive=true is used for short acronyms (C2U, GL, EHS, DBA, PRC, OWG, EWP, CBG) that would otherwise over-match against ordinary text.",
+  "clients": [
+    { "name": "C2U", "aliases": ["Chemist2U"], "caseSensitive": true },
+    { "name": "GL", "aliases": ["Good Ledger", "GoodLedger"], "caseSensitive": true },
+    { "name": "Krush", "aliases": ["Krush Organics"] },
+    { "name": "Aviiana", "aliases": [] },
+    { "name": "OWG", "aliases": [], "caseSensitive": true },
+    { "name": "Blundell", "aliases": [] },
+    { "name": "Cathro", "aliases": [] },
+    { "name": "EWP", "aliases": [], "caseSensitive": true },
+    { "name": "AgPages", "aliases": ["agpages", "agpages.com.au"] },
+    { "name": "Marque", "aliases": [] },
+    { "name": "Co-Group", "aliases": ["CoGroup", "Co Group"] },
+    { "name": "Randwick Electrical", "aliases": ["Randwick"] },
+    { "name": "Cadisfly", "aliases": [] },
+    { "name": "RentBetter", "aliases": ["Rent Better"] },
+    { "name": "DBA", "aliases": [], "caseSensitive": true },
+    { "name": "CBG", "aliases": [], "caseSensitive": true },
+    { "name": "EHS", "aliases": ["Enrich Home Supports", "Enrich Abilities"], "caseSensitive": true },
+    { "name": "Sage", "aliases": [] },
+    { "name": "Senari", "aliases": [] },
+    { "name": "Convo", "aliases": ["Convo App", "convo-app"] },
+    { "name": "Doggo", "aliases": ["doggo.com.au"] },
+    { "name": "iWanna", "aliases": ["i-Wanna", "iwanna"] },
+    { "name": "PRC", "aliases": [], "caseSensitive": true },
+    { "name": "Performance Clinics", "aliases": [] },
+    { "name": "Phoenix Gen", "aliases": ["PhoenixGen", "Phoenix Generation"] }
+  ]
+}
